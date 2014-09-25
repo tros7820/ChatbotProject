@@ -33,6 +33,9 @@ public class ChatbotAppController
 		JOptionPane.showMessageDialog(null, "We are not done yet...");
 	}
 	
+	/**
+	 * Quits the Chatbot Application
+	 */
 	private void quit()
 	{
 		JOptionPane.showMessageDialog(null, "bye");
