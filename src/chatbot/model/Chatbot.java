@@ -18,7 +18,7 @@ public class Chatbot
 	}
 	
 	/**
-	 * Gets the currents name og the Chatbot.
+	 * Gets the currents name of the Chatbot.
 	 * @return The current name of this Chatbot in a string.
 	 */
 	public String getName()
@@ -62,7 +62,7 @@ public class Chatbot
 	{
 		boolean okToQuit = false;
 		
-		if(input.equals("goodbye"))
+		if(input != null && input.equals("goodbye"))
 		{
 			okToQuit = true;
 		}
