@@ -2,13 +2,11 @@ package chatbot.controller;
 
 import chatbot.model.Chatbot;
 import chatbot.view.ChatbotView;
-
 /**
  * Application Controller for the Chatbot String manipulation project. Responsible for controlling the View and Model Packages.
  * @author tros7820
  *@version 1.3 10/1/14
  */
-
 public class ChatbotAppController
 {
 	/**
@@ -52,13 +50,15 @@ public class ChatbotAppController
 
 		while(!notSoCleverBot.quitChecker(message))
 		{
+			message = notSoCleverBot.processText(message);
 			message = appView.displayChatbotConversations(message);	
 		}
 		
+		quit();
 	}
 	
 	/**
-	 * Quits the Chatbot Application with a message to the user that the app is closing.
+	 * Quits the Chatbot Application with a message to the user that the application is closing.
 	 */
 	private void quit()
 	{

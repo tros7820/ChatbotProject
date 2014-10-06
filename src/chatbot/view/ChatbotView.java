@@ -18,9 +18,10 @@ public class ChatbotView
 	 * Displays the supplied String parameter to the user via popup and returns the user response to the controller.
 	 * @param input The supplied text to be displayed.
 	 *  The user input.
+	 * @return 
 	 */
 	
-	public void displayChatbotConversations(String input)
+	public String displayChatbotConversations(String input)
 	{
 		String output = "";
 		
