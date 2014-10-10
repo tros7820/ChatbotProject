@@ -7,24 +7,25 @@ public class Chatbot
 	private String name;
 	private int numberOfChats;
 	private ArrayList<String> memeList;
-	private String contentArea;
+	private ArrayList<String> contentList;
+
 	// "/**" allows for documentation
 
 	/**
-	 * Creates a Chatbot object with a specified name. Initializes the total
-	 * chats to 0.
+	 * Creates a Chatbot object with a specified name. Initializes the total chats to 0.
 	 * 
-	 * @param name
-	 *            The name of the chatbot.
+	 * @param name The name of the chatbot.
 	 */
 	public Chatbot(String name)
 	{
 		this.name = name;
 		numberOfChats = 0;
-		contentArea = "";
+		contentList = new ArrayList<String>();
 		// this. means talk to the current class
-		
+
 		memeList = new ArrayList<String>();
+		fillTheMemeList();
+		fillTheContentList();
 	}
 
 	/**
@@ -50,8 +51,7 @@ public class Chatbot
 	/**
 	 * Sets the name of Chatbot
 	 * 
-	 * @param name
-	 *            The new name of the Chatbot
+	 * @param name The new name of the Chatbot
 	 */
 	public void setName(String name)
 	{
@@ -84,13 +84,24 @@ public class Chatbot
 		memeList.add("Pfffffffffftttttttccchhhhhccchhhccccchhhhhccccccccchhhhhhchchhchchchchchhhhhhcccchhhch");
 		memeList.add("Hail stan");
 	}
+	private void fillTheContentList()
+	{
+		contentList.add("Attack On Tinan");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+		contentList.add("");
+	}
 
 	/**
-	 * Processes the supplied text from the user to provide a message from the
-	 * Chatbot.
-	 * 
-	 * @param userText
-	 *            The user supplied text.
+	 * Processes the supplied text from the user to provide a message from the Chatbot.
+	 *
+	 * @param The user supplied text.
 	 * @return What the Chatbot says because of the supplied input.
 	 */
 	public String processText(String userText)
@@ -99,28 +110,45 @@ public class Chatbot
 		incrimentChats();
 
 		int randomChoice = (int) (Math.random() * 3);
+		if (userText != null)
+		{
 
-		if (randomChoice == 0)
-		{
-			// Use stirngLengthChecker here
-		}
-		else if (randomChoice == 1)
-		{
-			// Use contentChecker here
-		}
-		else
-		{
-			if (memeChecker(userText))
+			if (randomChoice == 0)
 			{
-				processedText = "hey, you found a meme: " + userText;
-				processedText += "isn't that cool.";
+				if (stringLengthChecker(userText))
+				{
+					processedText = "Try typing something shorter, I'm not interested in your novel...";
+				}
+				else
+				{
+					processedText = "Details please! Way to short for a response, very little meaning.";
+				}
+			}
+			else if (randomChoice == 1)
+			{
+				if (contentChecker(userText))
+				{
+					processedText = "I love attack on Titan! When do you think the new season will be released?";
+				}
+				else
+				{
+					processedText = "Uhm, do you want to talk about Attack on Titan?";
+				}
 			}
 			else
 			{
-				processedText = "Boooooring! That wasn't a meme.";
+				if (memeChecker(userText))
+				{
+					processedText = "hey, you found a meme: " + userText;
+					processedText += "isn't that cool.";
+				}
+				else
+				{
+					processedText = "Boooooring! That wasn't a meme.";
+				}
 			}
-		}
 
+		}
 		return processedText;
 	}
 
@@ -137,7 +165,7 @@ public class Chatbot
 	private boolean contentChecker(String input)
 	{
 		boolean hasMyContent = false;
-		if (input.contains(contentArea))
+		if (input.equalsIgnoreCase(contentList))
 		{
 			hasMyContent = true;
 		}
@@ -145,11 +173,9 @@ public class Chatbot
 	}
 
 	/**
-	 * Checks to see if the supplied user text matches any on the memes in the
-	 * Chatbot's meme list.
+	 * Checks to see if the supplied user text matches any on the memes in the Chatbot's meme list.
 	 * 
-	 * @param currentText
-	 *            The user supplied text.
+	 * @param currentText The user supplied text.
 	 * @return Whether the String matched any of the built in memes.
 	 */
 	private boolean memeChecker(String currentText)
@@ -175,11 +201,9 @@ public class Chatbot
 
 	// Method inside a method is bad! do not do put a method inside a method!!!
 	/**
-	 * Checks if the conditions are right to quit the chatbot using a boolean,
-	 * if false app will not close, if true app will close.
+	 * Checks if the conditions are right to quit the chatbot using a boolean, if false app will not close, if true app will close.
 	 * 
-	 * @param input
-	 *            quits the app if "goodbye" is the input.
+	 * @param input quits the app if "goodbye" is the input.
 	 * @return Returns okToQuit.
 	 */
 	public boolean quitChecker(String input)
