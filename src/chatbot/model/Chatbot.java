@@ -2,12 +2,36 @@ package chatbot.model;
 
 import java.util.ArrayList;
 
+/**
+ * Model class for the Chatbot project
+ * 
+ * @author tros7820
+ */
+
 public class Chatbot
 {
+	/**
+	 * The name of the Chatbot.
+	 */
 	private String name;
+	/**
+	 * The programmer specified content area. Used in the contentChecker(String)
+	 */
 	private int numberOfChats;
+	/**
+	 * The current number of chats in the Chatbot has participated in.
+	 */
 	private ArrayList<String> memeList;
-	private ArrayList<String> contentList;
+	/**
+	 * The list of AOTs that are used in the Chatbot. Used in the
+	 */
+	private ArrayList<String> AOTList;
+	/**
+	 * A list of input from the user to be used with the program.
+	 */
+	private ArrayList<String> userInputList;
+
+	private User myUser;
 
 	// "/**" allows for documentation
 
@@ -20,12 +44,14 @@ public class Chatbot
 	{
 		this.name = name;
 		numberOfChats = 0;
-		contentList = new ArrayList<String>();
+		myUser = new User();
+		userInputList = new ArrayList<String>();
+		AOTList = new ArrayList<String>();
 		// this. means talk to the current class
 
 		memeList = new ArrayList<String>();
 		fillTheMemeList();
-		fillTheContentList();
+		fillTheAOTList();
 	}
 
 	/**
@@ -84,18 +110,40 @@ public class Chatbot
 		memeList.add("Pfffffffffftttttttccchhhhhccchhhccccchhhhhccccccccchhhhhhchchhchchchchchhhhhhcccchhhch");
 		memeList.add("Hail stan");
 	}
-	private void fillTheContentList()
+
+	private void fillTheAOTList()
 	{
-		contentList.add("Attack On Tinan");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
-		contentList.add("");
+		AOTList.add("Attack On Tinan");
+		AOTList.add("Titans");
+		AOTList.add("Eren Yeager");
+		AOTList.add("3D maneuvering gear");
+		AOTList.add("Mikasa Ackerman");
+		AOTList.add("Armin Arlert");
+		AOTList.add("Captain Levi");
+		AOTList.add("Reiner Braun");
+		AOTList.add("Bertolt Hoover");
+		AOTList.add("Annie Leonhart");
+		AOTList.add("Jean Kirstein");
+		AOTList.add("Marco Bott");
+		AOTList.add("Connie Springer");
+		AOTList.add("Sasha Blouse");
+		AOTList.add("Krista Lenz");
+		AOTList.add("Ymir");
+		AOTList.add("Thomas Wagner");
+		AOTList.add("Female Titan");
+		AOTList.add("Colossal Titan");
+		AOTList.add("Armored Titan");
+		AOTList.add("Military Police");
+		AOTList.add("Survey Corps");
+		AOTList.add("104th Trainees Squad");
+		AOTList.add("Trost Distric");
+		AOTList.add("Stohess District");
+		AOTList.add("Stohess District");
+		AOTList.add("Shiganshina District");
+		AOTList.add("Walls");
+		AOTList.add("Wall Sina");
+		AOTList.add("Wall Rose");
+		AOTList.add("Wall Maria");
 	}
 
 	/**
@@ -107,11 +155,44 @@ public class Chatbot
 	public String processText(String userText)
 	{
 		String processedText = "";
-		incrimentChats();
+		
 
-		int randomChoice = (int) (Math.random() * 3);
+		int randomChoice = (int) (Math.random() * 6);
 		if (userText != null)
 		{
+			if(numberOfChats < 4)
+			{
+				//Save userText to the chatUser's appropriate fields.
+				//For items that are not Strings you will need the wrapper
+				//like Inteer.parseInt(userText) to save as an int
+				//or Boolean.parseBoolean(userText) to save as a boolean
+				if(numberOfChats==0)
+				{
+					myUser.setUserName(userText);
+					processedText = "Hello " + myUser.getUserName() + " What is you age?";
+				}
+				else if(numberOfChats ==1)
+				{
+					int age = Integer.parseInt(userText);
+					myUser.setAge(age);
+					processedText = "Hello " + myUser.getUserName() + " you are really " + myUser.getAge() + " years old?";
+					processedText += "\nWhat is your favorite movie? ";
+				}
+				
+				else if(numberOfChats ==2)
+				{
+				
+				}
+				else if(numberOfChats ==3)
+				{
+					
+				}
+				else
+				{
+					
+					processedText = "How old are you?";
+				}
+			}
 
 			if (randomChoice == 0)
 			{
@@ -121,7 +202,7 @@ public class Chatbot
 				}
 				else
 				{
-					processedText = "Details please! Way to short for a response, very little meaning.";
+					processedText = "Details please! There has very little meaning.";
 				}
 			}
 			else if (randomChoice == 1)
@@ -135,7 +216,7 @@ public class Chatbot
 					processedText = "Uhm, do you want to talk about Attack on Titan?";
 				}
 			}
-			else
+			else if (randomChoice == 2)
 			{
 				if (memeChecker(userText))
 				{
@@ -147,9 +228,49 @@ public class Chatbot
 					processedText = "Boooooring! That wasn't a meme.";
 				}
 			}
-
+			else if(randomChoice == 3)
+			{
+				// User based talking
+			}
+			else if(randomChoice == 4)
+			{
+				//UserInputList add
+				userInputList.add(0, userText);
+				processedText = "Thanks for the input, " + myUser.getUserName();
+			}
+			else
+			{
+				//UserInputChecker
+			}
 		}
+		incrimentChats();
 		return processedText;
+	}
+
+	/**
+	 * Checks the length of the the string and determines whether or not it is too long.
+	 * 
+	 * @param input
+	 * @return
+	 */
+	private boolean userInputChecker(String input)
+	{
+		boolean matchesInput = false;
+
+		if (userInputList.size() > 0)
+		{
+			for (int loopCount = 0; loopCount < userInputList.size(); loopCount++)
+			{
+				if (input.equalsIgnoreCase(userInputList.get(loopCount)))
+				{
+					matchesInput = true;
+					userInputList.remove(loopCount);
+					loopCount--;
+				}
+			}
+		}
+
+		return matchesInput;
 	}
 
 	private boolean stringLengthChecker(String input)
@@ -162,14 +283,23 @@ public class Chatbot
 		return isTooLong;
 	}
 
+	/**
+	 * Checks for AOT content and determines whether or not there is any.
+	 * 
+	 * @param input
+	 * @return
+	 */
 	private boolean contentChecker(String input)
 	{
-		boolean hasMyContent = false;
-		if (input.equalsIgnoreCase(contentList))
+		boolean hasAOTContent = false;
+		for (String currentAOT : AOTList)
 		{
-			hasMyContent = true;
+			if (currentAOT.equalsIgnoreCase(input))
+			{
+				hasAOTContent = true;
+			}
 		}
-		return hasMyContent;
+		return hasAOTContent;
 	}
 
 	/**
@@ -189,13 +319,9 @@ public class Chatbot
 				isAMeme = true;
 			}
 		}
-		for (int loopCount = 0; loopCount < memeList.size(); loopCount++)
-		{
-			if (memeList.get(loopCount).equalsIgnoreCase(currentText))
-			{
-				isAMeme = true;
-			}
-		}
+		/*
+		 * for (int loopCount = 0; loopCount < memeList.size(); loopCount++) { if (memeList.get(loopCount).equalsIgnoreCase(currentText)) { isAMeme = true; } }
+		 */
 		return isAMeme;
 	}
 

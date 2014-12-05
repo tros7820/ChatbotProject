@@ -13,6 +13,7 @@ public class ChatbotPanel extends JPanel
 	private ChatbotAppController baseController;
 	
 	private JButton sampleButton;
+	private JButton memeButton;
 	private JTextField sampleField;
 	private JTextField SampleField;
 	private JTextArea chatArea;
@@ -25,13 +26,22 @@ public class ChatbotPanel extends JPanel
 	public ChatbotPanel(ChatbotAppController baseController)
 	{
 		this.baseController = baseController;
-		
-		sampleButton = new JButton("click on me please! XD");
 		sampleField = new JTextField(25);
-		chatArea = new JTextArea(5, 25);
+		chatArea = new JTextArea(10, 24);
 		chatPane = new JScrollPane(chatArea);
 		
 		baseLayout = new SpringLayout();
+		baseLayout.putConstraint(SpringLayout.WEST, sampleField, 0, SpringLayout.WEST, chatPane);
+		baseLayout.putConstraint(SpringLayout.EAST, sampleField, 0, SpringLayout.EAST, chatPane);
+		
+		
+		baseLayout.putConstraint(SpringLayout.NORTH, chatPane, 35, SpringLayout.NORTH, this);
+		
+		sampleButton = new JButton("click on me please! XD");
+		chatPane.setColumnHeaderView(sampleButton);
+		baseLayout.putConstraint(SpringLayout.NORTH, sampleButton, 466, SpringLayout.SOUTH, chatPane);
+		baseLayout.putConstraint(SpringLayout.SOUTH, sampleButton, -6, SpringLayout.NORTH, sampleField);
+		baseLayout.putConstraint(SpringLayout.EAST, sampleButton, 0, SpringLayout.EAST, sampleField);
 		
 		
 		setupScrollPane();
@@ -44,33 +54,27 @@ public class ChatbotPanel extends JPanel
 	{
 		chatArea.setLineWrap(true);
 		chatArea.setWrapStyleWord(true);
+		chatArea.setEnabled(false);
 	}
 	
 	private void setupPanel()
 	{
 		this.setBackground(Color.GREEN);
 		this.setLayout(baseLayout);;
-		
-		this.add(sampleButton);
-		this.add(sampleField);
-		
-		this.add(sampleButton);
 		this.add(sampleField);
 		this.add(chatPane);
+		
+		memeButton = new JButton("Give me a meme!!!");
+		baseLayout.putConstraint(SpringLayout.WEST, memeButton, 0, SpringLayout.WEST, chatPane);
+		baseLayout.putConstraint(SpringLayout.SOUTH, memeButton, -2, SpringLayout.NORTH, chatPane);
+		baseLayout.putConstraint(SpringLayout.EAST, memeButton, 198, SpringLayout.WEST, chatPane);
+		add(memeButton);
 		
 	}
 	
 	private void setupLayout()
 	{
-		baseLayout.putConstraint(SpringLayout.WEST, sampleField, 43, SpringLayout.WEST, this);
-		baseLayout.putConstraint(SpringLayout.EAST, sampleField, 397, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.SOUTH, sampleField, -24, SpringLayout.SOUTH, this);
-		
-		baseLayout.putConstraint(SpringLayout.NORTH, sampleButton, 10, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.EAST, sampleButton, -10, SpringLayout.EAST, this);
-		
-		
-		baseLayout.putConstraint(SpringLayout.NORTH, chatPane, 100, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.WEST, chatPane, 30, SpringLayout.WEST, this);
 	}
 	
@@ -80,8 +84,16 @@ public class ChatbotPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				sampleField.setText(sampleField.getText() + ":O Whaaaaaaaat?!");
+				String userTypedText = sampleField.getText();
+				String chatbotResponse = baseController.sendTextToChatBot(userTypedText);
+				chatArea.append(userTypedText);
+				chatArea.append(chatbotResponse);
 			}
 		});
+	}
+	
+	public void displayTextToUser(String input)
+	{
+		chatArea.append( input + "\n");
 	}
 }
