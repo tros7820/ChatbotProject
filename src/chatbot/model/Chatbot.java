@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Chatbot
 {
+	
 	/**
 	 * The name of the Chatbot.
 	 */
@@ -155,95 +156,121 @@ public class Chatbot
 	public String processText(String userText)
 	{
 		String processedText = "";
-		
 
-		int randomChoice = (int) (Math.random() * 6);
 		if (userText != null)
 		{
-			if(numberOfChats < 4)
+			if (numberOfChats < 5)
 			{
-				//Save userText to the chatUser's appropriate fields.
-				//For items that are not Strings you will need the wrapper
-				//like Inteer.parseInt(userText) to save as an int
-				//or Boolean.parseBoolean(userText) to save as a boolean
-				if(numberOfChats==0)
-				{
-					myUser.setUserName(userText);
-					processedText = "Hello " + myUser.getUserName() + " What is you age?";
-				}
-				else if(numberOfChats ==1)
-				{
-					int age = Integer.parseInt(userText);
-					myUser.setAge(age);
-					processedText = "Hello " + myUser.getUserName() + " you are really " + myUser.getAge() + " years old?";
-					processedText += "\nWhat is your favorite movie? ";
-				}
-				
-				else if(numberOfChats ==2)
-				{
-				
-				}
-				else if(numberOfChats ==3)
-				{
-					
-				}
-				else
-				{
-					
-					processedText = "How old are you?";
-				}
-			}
-
-			if (randomChoice == 0)
-			{
-				if (stringLengthChecker(userText))
-				{
-					processedText = "Try typing something shorter, I'm not interested in your novel...";
-				}
-				else
-				{
-					processedText = "Details please! There has very little meaning.";
-				}
-			}
-			else if (randomChoice == 1)
-			{
-				if (contentChecker(userText))
-				{
-					processedText = "I love attack on Titan! When do you think the new season will be released?";
-				}
-				else
-				{
-					processedText = "Uhm, do you want to talk about Attack on Titan?";
-				}
-			}
-			else if (randomChoice == 2)
-			{
-				if (memeChecker(userText))
-				{
-					processedText = "hey, you found a meme: " + userText;
-					processedText += "isn't that cool.";
-				}
-				else
-				{
-					processedText = "Boooooring! That wasn't a meme.";
-				}
-			}
-			else if(randomChoice == 3)
-			{
-				// User based talking
-			}
-			else if(randomChoice == 4)
-			{
-				//UserInputList add
-				userInputList.add(0, userText);
-				processedText = "Thanks for the input, " + myUser.getUserName();
+				processedText = introChat(userText);
 			}
 			else
 			{
-				//UserInputChecker
+				processedText = randomChat(userText);
 			}
+
 		}
 		incrimentChats();
+		return processedText;
+	}
+
+	private String introChat(String userText)
+	{
+		String processedText = "";
+		// Save userText to the chatUser's appropriate fields.
+		// For items that are not Strings you will need the wrapper
+		// like Inteer.parseInt(userText) to save as an int
+		// or Boolean.parseBoolean(userText) to save as a boolean
+		if (numberOfChats == 0)
+		{
+			myUser.setUserName(userText);
+			processedText = "Hello " + myUser.getUserName() + " What is your age?";
+		}
+		else if (numberOfChats == 1)
+		{
+			int age = Integer.parseInt(userText);
+			myUser.setAge(age);
+			processedText = "You're really " + myUser.getAge() + " years old?" + " That's awesome! " + myUser.getUserName();
+			processedText += "\nWhat is your favorite movie? ";
+		}
+
+		else if (numberOfChats == 2)
+		{
+			myUser.setFavoriteMovie(userText);
+			processedText = "I love" + myUser.getFavoriteMovie() + "!" + " It's one of my favorites!";
+			processedText += "Do you have a vavorit movie?";
+
+		}
+		else if (numberOfChats == 3)
+		{
+			boolean isPierced = Boolean.parseBoolean(userText);
+			myUser.setIsPierced(isPierced);
+			processedText = "So it's" + myUser.getIsPierced() + " that you are pierced!" + " Personally it's impossible to pierce me...";
+			processedText += "Do you hav any piercings?";
+		}
+		else
+		{
+			boolean isTattood = Boolean.parseBoolean(userText);
+			myUser.setIsTattooed(isTattood);
+			processedText = "I knew it! It's " + myUser.getIsTattooed() + " that you have tattoos!";
+			processedText += "Do you have any tatoos?";
+		}
+		return processedText;
+	}
+
+	private String randomChat(String userText)
+	{
+		String processedText = "";
+		int randomChoice = (int) (Math.random() * 6);
+
+		if (randomChoice == 0)
+		{
+			if (stringLengthChecker(userText))
+			{
+				processedText = "Try typing something shorter, I'm not interested in your novel...";
+			}
+			else
+			{
+				processedText = "Details please! There has very little meaning.";
+			}
+		}
+		else if (randomChoice == 1)
+		{
+			if (contentChecker(userText))
+			{
+				processedText = "I love attack on Titan! When do you think the new season will be released?";
+			}
+			else
+			{
+				processedText = "Uhm, do you want to talk about Attack on Titan?";
+			}
+		}
+		else if (randomChoice == 2)
+		{
+			if (memeChecker(userText))
+			{
+				processedText = "hey, you found a meme: " + userText;
+				processedText += "isn't that cool.";
+			}
+			else
+			{
+				processedText = "Boooooring! That wasn't a meme.";
+			}
+		}
+		else if (randomChoice == 3)
+		{
+			// User based talking
+		}
+		else if (randomChoice == 4)
+		{
+			// UserInputList add
+			userInputList.add(0, userText);
+			processedText = "Thanks for the input, " + myUser.getUserName();
+		}
+		else
+		{
+			// UserInputChecker
+		}
+
 		return processedText;
 	}
 
